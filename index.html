@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO</title>
+  </head>
+  <body>
+    <button id="led_on" >LED ON</button>
+    <button id="led_off" >LED OFF</button>
+    <h1 id="msgUpdate"></h1>
+    <ul id="messages"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            var socket = io();
+            socket.on('msgUpdate', function(msg){
+                $('#msgUpdate').text(msg);
+            });
+            socket.on('chat message', function(msg){
+                $('#messages').append($('<li>').text(msg));
+            });
+            $('#led_on').click(function(){
+                socket.emit('chat message', '2');
+            });
+            $('#led_off').click(function(){
+                socket.emit('chat message', '1');
+            });
+        });
+
+      </script>
+  </body>
+</html>
